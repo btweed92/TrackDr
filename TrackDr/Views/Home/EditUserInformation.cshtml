@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Edit User Information";
+}
+
+<h1>Edit My Information</h1>
+@model TrackDr.Models.Parent
+
+<form action="/Home/EditUserInformation" method="post">
+    <p>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</p>
+    <input type="text" name="HouseNumber" value="@Model.HouseNumber" placeholder="Address" />
+    <input type="text" name="Street" value="@Model.Street" placeholder="Street" />
+    <input type="text" name="Street2" value="@Model.Street2" placeholder="Street 2" />
+    <input type="text" name="City" value="@Model.City" placeholder="City" />
+    <input type="text" name="ZipCode" value="@Model.ZipCode" placeholder="Zip Code" />
+    <div class="select" style="width: 188px;">
+        @Html.DropDownListFor(m => m.State, new SelectList(Enum.GetValues(typeof(Parent.StateAbbreviations))), "State", new { @class = "form-control" })
+    </div>
+    <input type="hidden" name="ParentId" value="@Model.ParentId" />
+    <input type="submit" value="Save Changes" />
+</form>

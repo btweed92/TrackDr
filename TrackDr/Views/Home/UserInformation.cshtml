@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "User Information";
+}
+
+<h1>My Information</h1>
+
+@model TrackDr.Models.Parent
+
+
+<table class="table" style="opacity:0.6;background-color:white">
+    <tr>
+        <th>House Number</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+    </tr>
+    <tr>
+        <td>@Model.HouseNumber</td>
+        <td>@Model.Street</td>
+        @if (Model.Street2 != null)
+        {
+            <td>@Model.Street2</td>
+        }
+        <td>@Model.City</td>
+        <td>@Model.State</td>
+
+        <td>@Model.ZipCode</td>
+
+        <td><a href="/Home/EditUserInformation?ParentId=@Model.ParentId">Edit</a></td>
+    </tr>
+</table>
+

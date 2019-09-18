@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results</h1>
+
+@model TrackDr.Models.Rootobject
+
+<table class="table-hover" style="table-layout:fixed; column-count: 5; column-width: 30px; opacity:0.5;background-color:white">
+    <tr style="width: 30px;">
+        <th>Title:</th>
+        <th>Name:</th>
+        <th>State:</th>
+        <th>Specialties:</th>
+        <th>Save:</th>
+    </tr>
+
+    @foreach (var doctor in Model.data)
+    {
+        <tr>
+            <td>@doctor.profile.title</td>
+            <td>@doctor.profile.first_name @doctor.profile.last_name</td>
+            <td>
+                @{List<string> stateList = new List<string>();
+                    @foreach (var office in doctor.practices)
+                    {
+                        if (!stateList.Contains(office.visit_address.state))
+                        {
+
+                            @office.visit_address.state<br />
+                            stateList.Add(office.visit_address.state);
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @if (doctor.specialties.Length > 1)
+                {
+                    <ul style="padding-left:0">
+                        @foreach (var specialty in doctor.specialties)
+                        {
+                            <li style="list-style-position:inside">@specialty.name</li>
+                        }
+                    </ul>
+                }
+                else
+                {@doctor.specialties[0].name}
+            </td>
+
+            <td>
+                <form action="/Home/AddDoctor" method="post">
+                    <input type="hidden" name="DoctorId" value="@doctor.uid" />
+                    <input type="hidden" name="FirstName" value="@doctor.profile.first_name" />
+                    <input type="submit" value="Add" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>

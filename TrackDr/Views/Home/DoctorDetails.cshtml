@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+@model TrackDr.Models.SingleDoctor
+<h1>Doctor Details</h1>
+
+<table class="table table-hover" style="opacity:0.6;background-color:white">
+    <tr>
+        <th>Distance in Miles:</th>
+        <th>Distance in Time:</th>
+        <th>Title:</th>
+        <th>Name:</th>
+        <th>Gender:</th>
+        <th>States:</th>
+        <th>Specialties:</th>
+        <th>Bio:</th>
+        <th>Languages:</th>
+        <th>Picture:</th>
+    </tr>
+
+    <tr>
+        <td>@Model.DistanceInMiles</td>
+        <td>@Model.DistanceInTime</td>
+        <td>@Model.data.profile.title</td>
+        <td>@Model.data.profile.first_name @Model.data.profile.last_name</td>
+        <td>@Model.data.profile.gender</td>
+        <td>
+            @{List<string> stateList = new List<string>();
+                @foreach (var office in Model.data.practices)
+                {
+                    if (!stateList.Contains(office.visit_address.state))
+                    {
+                        <p>@office.visit_address.state</p>
+                        stateList.Add(office.visit_address.state);
+                    }
+                }
+            }
+        </td>
+        <td>
+            @foreach (var specialty in Model.data.specialties)
+            {
+                <p>@specialty.name</p>
+            }
+        </td>
+        <td>@Model.data.profile.bio</td>
+
+        <td>
+            @foreach (var language in Model.data.profile.languages)
+            {
+                <p>@language.name</p>
+            }
+        </td>
+
+        <td><img src="@Model.data.profile.image_url" alt="Photo" /></td>
+    </tr>
+</table>
